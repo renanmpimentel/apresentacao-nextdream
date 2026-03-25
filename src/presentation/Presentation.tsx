@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
-import { ChevronLeft, ChevronRight, Heart, Printer, Clock, HandHeart, Users, Sparkles, Star, Quote, ArrowRight, Loader2, Download } from 'lucide-react';
+import { useState, useEffect, useCallback, type ReactNode } from 'react';
+import { ChevronLeft, ChevronRight, Heart, Clock, HandHeart, Users, Sparkles, Star, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import logoImg from '../assets/logo.png';
 import { jsPDF } from 'jspdf';
@@ -22,8 +22,8 @@ const IMG = {
 // ─── SLIDE FOOTER (logo + page) ───
 function SlideFooter({ slideNum, total, dark = false }: { slideNum: number; total: number; dark?: boolean }) {
   return (
-    <div className={`absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-3 ${dark ? 'bg-black/30' : 'bg-white/60 backdrop-blur-sm'}`}>
-      <img src={logoImg} alt="NextDream" className={`h-5 w-auto ${dark ? 'brightness-0 invert opacity-60' : 'opacity-50'}`} />
+    <div className={`absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2 md:px-6 md:py-3 ${dark ? 'bg-black/30' : 'bg-white/60 backdrop-blur-sm'}`}>
+      <img src={logoImg} alt="NextDream" className={`h-4 w-auto md:h-5 ${dark ? 'brightness-0 invert opacity-60' : 'opacity-50'}`} />
       <span className={`text-xs ${dark ? 'text-white/50' : 'text-gray-400'}`}>{slideNum} / {total}</span>
     </div>
   );
@@ -52,10 +52,10 @@ function SlideCover() {
         {/* Accent bar */}
         <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ background: BRAND }} />
 
-        <div className="relative z-10 h-full flex flex-col justify-center pl-20 pr-16">
+        <div className="relative z-10 flex h-full flex-col justify-center px-6 py-10 sm:px-10 md:pl-20 md:pr-16">
           {/* Tag line */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-            <div className="flex items-center gap-3 mb-8">
+            <div className="mb-6 flex items-center gap-3 md:mb-8">
               <div className="w-8 h-px" style={{ background: BRAND }} />
               <span className="text-xs tracking-[0.3em] uppercase" style={{ color: BRAND, fontFamily: 'Inter' }}>
                 Uma plataforma feita de amor
@@ -65,13 +65,13 @@ function SlideCover() {
 
           {/* Logo */}
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.6 }}>
-            <img src={logoImg} alt="NextDream" className="h-14 w-auto brightness-0 invert mb-10" />
+            <img src={logoImg} alt="NextDream" className="mb-6 h-10 w-auto brightness-0 invert md:mb-10 md:h-14" />
           </motion.div>
 
           {/* Main phrase — serif for emotional weight */}
           <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }} className="max-w-xl">
             <h1
-              className="text-[2.6rem] leading-[1.2] text-white mb-4"
+              className="mb-4 text-3xl leading-[1.15] text-white sm:text-4xl md:text-[2.6rem]"
               style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
             >
               Porque os sonhos mais bonitos{' '}
@@ -81,7 +81,7 @@ function SlideCover() {
 
           {/* Sub-phrase — sans-serif, lighter, staggered words */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.75, duration: 0.6 }} className="max-w-lg">
-            <p className="text-lg text-white/60 tracking-wide" style={{ fontFamily: 'Inter' }}>
+            <p className="text-base tracking-wide text-white/60 sm:text-lg" style={{ fontFamily: 'Inter' }}>
               Custam{' '}
               <span className="text-white/90" style={{ fontWeight: 500 }}>presença</span>.{' '}
               Custam{' '}
@@ -92,7 +92,7 @@ function SlideCover() {
           </motion.div>
 
           {/* Decorative bottom accent */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1, duration: 0.8 }} className="mt-12 flex items-center gap-3">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1, duration: 0.8 }} className="mt-8 flex items-center gap-3 md:mt-12">
             <Heart className="w-3.5 h-3.5" style={{ color: BRAND }} fill={BRAND} />
             <div className="w-16 h-px" style={{ background: `linear-gradient(to right, ${BRAND}, transparent)` }} />
           </motion.div>
@@ -109,16 +109,16 @@ function SlideThePain() {
       <div className="relative h-full w-full overflow-hidden">
         <img src={IMG.hands} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-        <div className="relative z-10 h-full flex flex-col justify-end p-16 pb-20">
+        <div className="relative z-10 flex h-full flex-col justify-end p-6 pb-14 sm:p-10 sm:pb-16 md:p-16 md:pb-20">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="max-w-3xl">
-            <p className="text-pink-300 uppercase tracking-widest text-sm mb-4">O que nos move</p>
-            <h2 className="text-5xl text-white mb-6 leading-tight">
+            <p className="mb-3 text-xs uppercase tracking-widest text-pink-300 md:mb-4 md:text-sm">O que nos move</p>
+            <h2 className="mb-4 text-3xl leading-tight text-white sm:text-4xl md:mb-6 md:text-5xl">
               Existem pessoas que só precisam de
               <span className="text-pink-400"> um abraço</span>,
               <span className="text-pink-300"> uma visita</span>,
               <span className="text-pink-200"> uma palavra</span>.
             </h2>
-            <p className="text-lg text-white/70 max-w-xl leading-relaxed">
+            <p className="max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
               Pacientes em tratamento contra o câncer enfrentam muito mais que a doença.
               Enfrentam a solidão, o medo, e a sensação de que seus sonhos ficaram para trás.
             </p>
@@ -139,16 +139,16 @@ function SlideStories() {
 
   return (
     <SlideWrap slideNum={3} total={TOTAL}>
-      <div className="h-full flex flex-col p-12 pb-16" style={{ background: `linear-gradient(135deg, ${BRAND_LIGHT} 0%, white 100%)` }}>
-        <div className="mb-8">
-          <p className="uppercase tracking-widest text-sm mb-2" style={{ color: BRAND }}>Sonhos reais, apoio real</p>
-          <h2 className="text-4xl text-gray-900">Cada sonho é uma história de <span style={{ color: BRAND }}>esperança</span></h2>
+      <div className="flex h-full flex-col p-5 pb-12 md:p-12 md:pb-16" style={{ background: `linear-gradient(135deg, ${BRAND_LIGHT} 0%, white 100%)` }}>
+        <div className="mb-5 md:mb-8">
+          <p className="mb-2 text-xs uppercase tracking-widest md:text-sm" style={{ color: BRAND }}>Sonhos reais, apoio real</p>
+          <h2 className="text-2xl text-gray-900 sm:text-3xl md:text-4xl">Cada sonho é uma história de <span style={{ color: BRAND }}>esperança</span></h2>
         </div>
-        <div className="flex-1 grid grid-cols-3 gap-6">
+        <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
           {stories.map((s, i) => (
-            <motion.div key={s.name} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.15 }} className="bg-white rounded-2xl p-6 shadow-lg shadow-pink-100/50 border border-pink-50 flex flex-col">
-              <div className="text-4xl mb-3">{s.icon}</div>
-              <h3 className="text-gray-900 text-lg">{s.name}</h3>
+            <motion.div key={s.name} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.15 }} className="flex flex-col rounded-2xl border border-pink-50 bg-white p-4 shadow-lg shadow-pink-100/50 md:p-6">
+              <div className="mb-2 text-3xl md:mb-3 md:text-4xl">{s.icon}</div>
+              <h3 className="text-base text-gray-900 md:text-lg">{s.name}</h3>
               <p className="text-xs text-gray-400 mb-4">{s.condition}</p>
               <div className="flex-1">
                 <div className="flex gap-2 mb-3">
@@ -174,16 +174,16 @@ function SlideStories() {
 function SlideWhatIs() {
   return (
     <SlideWrap slideNum={4} total={TOTAL}>
-      <div className="h-full flex overflow-hidden">
-        <div className="w-1/2 p-12 pb-16 flex flex-col justify-center" style={{ background: `linear-gradient(180deg, ${BRAND} 0%, ${BRAND_DARK} 100%)` }}>
+      <div className="flex h-full flex-col overflow-hidden md:flex-row">
+        <div className="flex w-full flex-col justify-center p-6 pb-8 md:w-1/2 md:p-12 md:pb-16" style={{ background: `linear-gradient(180deg, ${BRAND} 0%, ${BRAND_DARK} 100%)` }}>
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-            <Sparkles className="w-10 h-10 text-pink-200 mb-6" />
-            <h2 className="text-4xl text-white mb-6 leading-tight">
+            <Sparkles className="mb-4 h-8 w-8 text-pink-200 md:mb-6 md:h-10 md:w-10" />
+            <h2 className="mb-4 text-2xl leading-tight text-white sm:text-3xl md:mb-6 md:text-4xl">
               Uma plataforma que conecta<br />
               <span className="text-pink-200">quem precisa de carinho</span><br />
               a <span className="text-pink-200">quem tem carinho para dar</span>.
             </h2>
-            <p className="text-white/70 leading-relaxed mb-8">
+            <p className="mb-6 leading-relaxed text-white/70 md:mb-8">
               O NextDream é um espaço seguro onde pacientes em tratamento oncológico
               cadastram sonhos simples — e pessoas com coração grande se oferecem para realizá-los.
             </p>
@@ -194,7 +194,7 @@ function SlideWhatIs() {
             </div>
           </motion.div>
         </div>
-        <div className="w-1/2 relative">
+        <div className="relative min-h-[24vh] w-full md:w-1/2 md:min-h-0">
           <img src={IMG.grandma} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${BRAND}20, transparent)` }} />
         </div>
@@ -215,15 +215,15 @@ function SlideHowItWorks() {
 
   return (
     <SlideWrap slideNum={5} total={TOTAL}>
-      <div className="h-full flex flex-col p-12 pb-16 bg-white">
-        <div className="mb-8">
-          <p className="uppercase tracking-widest text-sm mb-2" style={{ color: BRAND }}>Simples e acolhedor</p>
-          <h2 className="text-4xl text-gray-900">Como funciona?</h2>
+      <div className="flex h-full flex-col bg-white p-5 pb-12 md:p-12 md:pb-16">
+        <div className="mb-5 md:mb-8">
+          <p className="mb-2 text-xs uppercase tracking-widest md:text-sm" style={{ color: BRAND }}>Simples e acolhedor</p>
+          <h2 className="text-2xl text-gray-900 sm:text-3xl md:text-4xl">Como funciona?</h2>
         </div>
         <div className="flex-1 flex items-center">
           <div className="w-full flex flex-col gap-2">
             {steps.map((step, i) => (
-              <motion.div key={step.title} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.1 }} className="flex items-start gap-5 p-4 rounded-xl hover:bg-pink-50/50 transition-colors">
+              <motion.div key={step.title} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.1 }} className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-pink-50/50 md:gap-5 md:p-4">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-white" style={{ background: BRAND }}>{step.icon}</div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
@@ -232,7 +232,7 @@ function SlideHowItWorks() {
                   </div>
                   <p className="text-sm text-gray-500">{step.desc}</p>
                 </div>
-                {i < steps.length - 1 && <ArrowRight className="w-4 h-4 text-gray-200 mt-3 shrink-0" />}
+                {i < steps.length - 1 && <ArrowRight className="mt-3 hidden h-4 w-4 shrink-0 text-gray-200 md:block" />}
               </motion.div>
             ))}
           </div>
@@ -249,17 +249,17 @@ function SlideValues() {
       <div className="relative h-full w-full overflow-hidden">
         <img src={IMG.togetherness} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/20" />
-        <div className="relative z-10 h-full flex flex-col justify-center px-16 pb-12">
+        <div className="relative z-10 flex h-full flex-col justify-center px-6 pb-10 pt-10 sm:px-10 md:px-16 md:pb-12">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="max-w-2xl">
-            <Clock className="w-12 h-12 text-pink-300 mb-6" />
-            <h2 className="text-5xl text-white leading-tight mb-8">
+            <Clock className="mb-4 h-8 w-8 text-pink-300 md:mb-6 md:h-12 md:w-12" />
+            <h2 className="mb-6 text-3xl leading-tight text-white sm:text-4xl md:mb-8 md:text-5xl">
               A moeda mais valiosa<br />do mundo é o <span className="text-pink-400">tempo</span>.
             </h2>
-            <p className="text-xl text-white/80 leading-relaxed mb-8">
+            <p className="mb-6 text-base leading-relaxed text-white/80 md:mb-8 md:text-xl">
               No NextDream, ninguém doa dinheiro.<br />
               As pessoas doam o que têm de mais precioso:
             </p>
-            <div className="grid grid-cols-2 gap-4 max-w-lg">
+            <div className="grid max-w-lg grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4">
               {[
                 { emoji: '⏰', label: 'Seu tempo' },
                 { emoji: '💛', label: 'Seu carinho' },
@@ -292,23 +292,23 @@ function SlideImpact() {
 
   return (
     <SlideWrap slideNum={7} total={TOTAL}>
-      <div className="h-full flex flex-col p-12 pb-16" style={{ background: `linear-gradient(135deg, white 0%, ${BRAND_LIGHT} 100%)` }}>
-        <div className="mb-10">
-          <p className="uppercase tracking-widest text-sm mb-2" style={{ color: BRAND }}>Nosso impacto</p>
-          <h2 className="text-4xl text-gray-900">Números que representam <span style={{ color: BRAND }}>vidas</span></h2>
+      <div className="flex h-full flex-col p-5 pb-12 md:p-12 md:pb-16" style={{ background: `linear-gradient(135deg, white 0%, ${BRAND_LIGHT} 100%)` }}>
+        <div className="mb-6 md:mb-10">
+          <p className="mb-2 text-xs uppercase tracking-widest md:text-sm" style={{ color: BRAND }}>Nosso impacto</p>
+          <h2 className="text-2xl text-gray-900 sm:text-3xl md:text-4xl">Números que representam <span style={{ color: BRAND }}>vidas</span></h2>
         </div>
-        <div className="flex-1 grid grid-cols-4 gap-6 items-center">
+        <div className="grid flex-1 grid-cols-2 gap-3 items-center md:grid-cols-4 md:gap-6">
           {metrics.map((m, i) => (
-            <motion.div key={m.label} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.1 }} className="bg-white rounded-3xl p-8 shadow-lg shadow-pink-100/50 text-center flex flex-col items-center gap-3 border border-pink-50">
-              <span className="text-5xl" style={{ color: BRAND }}>{m.value}</span>
-              <span className="text-lg text-gray-800">{m.label}</span>
+            <motion.div key={m.label} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.1 }} className="flex flex-col items-center gap-2 rounded-3xl border border-pink-50 bg-white p-4 text-center shadow-lg shadow-pink-100/50 md:gap-3 md:p-8">
+              <span className="text-3xl md:text-5xl" style={{ color: BRAND }}>{m.value}</span>
+              <span className="text-base text-gray-800 md:text-lg">{m.label}</span>
               <span className="text-xs text-gray-400">{m.desc}</span>
             </motion.div>
           ))}
         </div>
-        <div className="mt-8 bg-white rounded-2xl p-6 flex items-center gap-6 shadow-sm border border-pink-50">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: BRAND_LIGHT }}>
-            <HandHeart className="w-8 h-8" style={{ color: BRAND }} />
+        <div className="mt-5 flex items-start gap-4 rounded-2xl border border-pink-50 bg-white p-4 shadow-sm md:mt-8 md:items-center md:gap-6 md:p-6">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full md:h-16 md:w-16" style={{ background: BRAND_LIGHT }}>
+            <HandHeart className="h-6 w-6 md:h-8 md:w-8" style={{ color: BRAND }} />
           </div>
           <div>
             <h3 className="text-gray-900 mb-1">Sonhos não têm preço. Têm <span style={{ color: BRAND }}>significado</span>.</h3>
@@ -324,18 +324,18 @@ function SlideImpact() {
 function SlideWhoCanHelp() {
   return (
     <SlideWrap slideNum={8} total={TOTAL}>
-      <div className="h-full flex overflow-hidden">
-        <div className="w-1/2 relative">
+      <div className="flex h-full flex-col overflow-hidden md:flex-row">
+        <div className="relative min-h-[24vh] w-full md:w-1/2 md:min-h-0">
           <img src={IMG.community} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white" />
         </div>
-        <div className="w-1/2 p-12 pb-16 flex flex-col justify-center bg-white">
+        <div className="flex w-full flex-col justify-center bg-white p-5 pb-12 md:w-1/2 md:p-12 md:pb-16">
           <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-            <p className="uppercase tracking-widest text-sm mb-3" style={{ color: BRAND }}>Todo mundo pode ajudar</p>
-            <h2 className="text-4xl text-gray-900 mb-6 leading-tight">
+            <p className="mb-2 text-xs uppercase tracking-widest md:mb-3 md:text-sm" style={{ color: BRAND }}>Todo mundo pode ajudar</p>
+            <h2 className="mb-5 text-2xl leading-tight text-gray-900 sm:text-3xl md:mb-6 md:text-4xl">
               Você também pode fazer parte dessa <span style={{ color: BRAND }}>corrente de amor</span>
             </h2>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4 md:gap-5">
               {[
                 { title: 'Profissionais de saúde', desc: 'Indiquem pacientes que precisam de apoio emocional. Nós cuidamos do resto com segurança e carinho.' },
                 { title: 'Voluntários e comunidades', desc: 'Ampliem o alcance dos sonhos. Juntos, chegamos a mais pessoas que precisam de um abraço.' },
@@ -362,12 +362,12 @@ function SlideWhoCanHelp() {
 function SlideSecurity() {
   return (
     <SlideWrap slideNum={9} total={TOTAL} dark>
-      <div className="h-full flex flex-col p-12 pb-16 bg-gray-900">
-        <div className="mb-10">
-          <p className="uppercase tracking-widest text-sm mb-2 text-pink-400">Confiança e segurança</p>
-          <h2 className="text-4xl text-white">Cuidamos de quem cuida</h2>
+      <div className="flex h-full flex-col bg-gray-900 p-5 pb-12 md:p-12 md:pb-16">
+        <div className="mb-6 md:mb-10">
+          <p className="mb-2 text-xs uppercase tracking-widest text-pink-400 md:text-sm">Confiança e segurança</p>
+          <h2 className="text-2xl text-white sm:text-3xl md:text-4xl">Cuidamos de quem cuida</h2>
         </div>
-        <div className="flex-1 grid grid-cols-3 gap-6 items-center">
+        <div className="grid flex-1 grid-cols-1 gap-4 items-center md:grid-cols-3 md:gap-6">
           {[
             { icon: '🔒', title: 'Chat Moderado', desc: 'Todas as conversas são mediadas. Nenhum dado pessoal é exposto sem consentimento.' },
             { icon: '🛡️', title: 'Painel Admin', desc: 'Equipe de moderação acompanha propostas, mensagens e denúncias em tempo real.' },
@@ -395,19 +395,19 @@ function SlideClosing() {
       <div className="relative h-full w-full overflow-hidden">
         <img src={IMG.stars} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-12 pb-12">
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 pb-10 pt-10 text-center md:px-12 md:pb-12">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} className="max-w-2xl">
-            <img src={logoImg} alt="NextDream" className="h-12 w-auto brightness-0 invert mx-auto mb-8" />
-            <h2 className="text-5xl text-white mb-6 leading-tight">
+            <img src={logoImg} alt="NextDream" className="mx-auto mb-6 h-10 w-auto brightness-0 invert md:mb-8 md:h-12" />
+            <h2 className="mb-5 text-3xl leading-tight text-white sm:text-4xl md:mb-6 md:text-5xl">
               Você não precisa de dinheiro<br />para mudar uma vida.
             </h2>
-            <p className="text-xl text-white/70 mb-4">
+            <p className="mb-3 text-lg text-white/70 md:mb-4 md:text-xl">
               Precisa de coração.
             </p>
-            <p className="text-lg text-pink-300 mb-10">
+            <p className="mb-8 text-base text-pink-300 md:mb-10 md:text-lg">
               E se você está lendo isso, você já tem.
             </p>
-            <div className="mt-12 flex items-center justify-center gap-2 text-white/40 text-sm">
+            <div className="mt-8 flex items-center justify-center gap-2 text-center text-xs text-white/40 md:mt-12 md:text-sm">
               <Heart className="w-3 h-3" />
               <span>NextDream — Feito com amor, para quem precisa de amor</span>
               <Heart className="w-3 h-3" />
@@ -845,6 +845,7 @@ function generatePDF() {
 export default function Presentation() {
   const [current, setCurrent] = useState(0);
   const total = slides.length;
+  const stageWidth = 'min(98vw, calc((100vh - 7.5rem) * 16 / 9))';
 
   const prev = useCallback(() => setCurrent((c) => Math.max(0, c - 1)), []);
   const next = useCallback(() => setCurrent((c) => Math.min(total - 1, c + 1)), [total]);
@@ -861,25 +862,24 @@ export default function Presentation() {
   const SlideComponent = slides[current].render;
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center px-2 py-2 sm:px-3 sm:py-3">
       {/* Top bar */}
-      <div className="mb-4 flex items-center gap-6">
+      <div
+        className="mb-2 flex w-full items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 backdrop-blur-sm sm:mb-3"
+        style={{ maxWidth: stageWidth }}
+      >
         <div className="flex items-center gap-2">
-          <img src={logoImg} alt="NextDream" className="h-6 w-auto brightness-0 invert opacity-70" />
+          <img src={logoImg} alt="NextDream" className="h-5 w-auto brightness-0 invert opacity-70 sm:h-6" />
+          <span className="text-xs text-gray-400 sm:text-sm">Slide {current + 1} de {total}</span>
         </div>
-        <span className="text-sm text-gray-600">Slide {current + 1} de {total}</span>
-        <button
-          onClick={generatePDF}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-white transition-transform hover:scale-105"
-          style={{ background: BRAND }}
-        >
-          <Download className="w-4 h-4" /> Baixar PDF
-        </button>
-        <span className="text-xs text-gray-600">Use ← → ou espaço para navegar</span>
+        <span className="text-[11px] text-gray-500 sm:text-xs">Use ← → ou espaço para navegar</span>
       </div>
 
       {/* Slide container */}
-      <div className="w-full max-w-6xl aspect-[16/9] bg-white rounded-2xl shadow-2xl shadow-pink-900/10 overflow-hidden relative">
+      <div
+        className="relative h-[calc(100vh-8.5rem)] max-h-[calc(100vh-8.5rem)] w-full overflow-hidden rounded-xl bg-white shadow-2xl shadow-pink-900/10 sm:rounded-2xl md:h-auto md:max-h-none md:aspect-[16/9]"
+        style={{ maxWidth: stageWidth }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={slides[current].id}
@@ -887,7 +887,7 @@ export default function Presentation() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute inset-0"
+            className="absolute inset-0 overflow-y-auto md:overflow-hidden"
           >
             <SlideComponent />
           </motion.div>
@@ -895,8 +895,8 @@ export default function Presentation() {
       </div>
 
       {/* Navigation */}
-      <div className="mt-6 flex items-center gap-6">
-        <button onClick={prev} disabled={current === 0} className="p-3 rounded-full bg-gray-800 hover:bg-gray-700 disabled:opacity-20 transition-all">
+      <div className="mt-3 flex items-center gap-4 sm:mt-4 sm:gap-6">
+        <button onClick={prev} disabled={current === 0} className="rounded-full bg-gray-800 p-3 transition-all hover:bg-gray-700 disabled:opacity-20">
           <ChevronLeft className="w-5 h-5 text-white" />
         </button>
         <div className="flex gap-2">
@@ -912,7 +912,7 @@ export default function Presentation() {
             />
           ))}
         </div>
-        <button onClick={next} disabled={current === total - 1} className="p-3 rounded-full bg-gray-800 hover:bg-gray-700 disabled:opacity-20 transition-all">
+        <button onClick={next} disabled={current === total - 1} className="rounded-full bg-gray-800 p-3 transition-all hover:bg-gray-700 disabled:opacity-20">
           <ChevronRight className="w-5 h-5 text-white" />
         </button>
       </div>
