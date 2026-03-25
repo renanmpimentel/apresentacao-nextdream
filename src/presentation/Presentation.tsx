@@ -2,21 +2,24 @@ import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react'
 import { ChevronLeft, ChevronRight, Heart, Clock, HandHeart, Users, Sparkles, Star, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import logoImg from '../assets/logo.png';
-import { jsPDF } from 'jspdf';
+import grandmaImg from '../assets/slides/grandma.jpg';
+import handsImg from '../assets/slides/hands.jpg';
+import togethernessImg from '../assets/slides/togetherness.jpg';
+import communityImg from '../assets/slides/community.jpg';
+import dandelionImg from '../assets/slides/dandelion.jpg';
+import starsImg from '../assets/slides/stars.jpg';
 
 const BRAND = '#D91B8C';
 const BRAND_DARK = '#B0146E';
 const BRAND_LIGHT = '#F9E0F0';
 
 const IMG = {
-  grandma: 'https://images.unsplash.com/photo-1593100126453-19b562a800c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmFuZG1vdGhlciUyMGdyYW5kY2hpbGQlMjBodWdnaW5nJTIwbG92ZXxlbnwxfHx8fDE3NzQyNzQ4ODN8MA&ixlib=rb-4.1.0&q=80&w=1080',
-  hands: 'https://images.unsplash.com/photo-1581612129334-551ccd069e62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyYWluYm93JTIwY29sb3JmdWwlMjBoYW5kcyUyMHRvZ2V0aGVyJTIwc29saWRhcml0eXxlbnwxfHx8fDE3NzQyNzUxMzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-  togetherness: 'https://images.unsplash.com/photo-1743956242693-cc024361ae9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGRlcmx5JTIwcGF0aWVudCUyMGhvbGRpbmclMjBoYW5kcyUyMHZvbHVudGVlciUyMGhvc3BpdGFsJTIwd2FybXRoJTIwY2FyZXxlbnwxfHx8fDE3NzQyNzU2OTF8MA&ixlib=rb-4.1.0&q=80&w=1080',
-  community: 'https://images.unsplash.com/photo-1630068846062-3ffe78aa5049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZW9wbGUlMjB0b2dldGhlciUyMGRpdmVyc2l0eSUyMGNvbW11bml0eSUyMGhlYXJ0fGVufDF8fHx8MTc3NDI3NDg4NHww&ixlib=rb-4.1.0&q=80&w=1080',
-  dandelion: 'https://images.unsplash.com/photo-1765947378663-9e7ad34ca310?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGJhbGxvb25zJTIwY2hpbGRyZW4lMjBjZWxlYnJhdGlvbiUyMGpveXxlbnwxfHx8fDE3NzQyNzUxMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-  family: 'https://images.unsplash.com/photo-1644665088789-b5a3de58f278?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjByZXVuaW9uJTIwZW1icmFjZSUyMHRlYXJzJTIwam95fGVufDF8fHx8MTc3NDI3NDg4NXww&ixlib=rb-4.1.0&q=80&w=1080',
-  mentor: 'https://images.unsplash.com/photo-1700462246313-257db1ff61b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZW5pb3IlMjB3b21hbiUyMHNtaWxpbmclMjBmbG93ZXJzJTIwY29sb3JmdWwlMjBnYXJkZW58ZW58MXx8fHwxNzc0Mjc1MTM3fDA&ixlib=rb-4.1.0&q=80&w=1080',
-  stars: 'https://images.unsplash.com/photo-1773408922182-e547cc3e0a93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxraWRzJTIwcGFpbnRpbmclMjBjb2xvcmZ1bCUyMGFydCUyMGhhcHB5JTIwaGFuZHN8ZW58MXx8fHwxNzc0Mjc1MTM3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+  grandma: grandmaImg,
+  hands: handsImg,
+  togetherness: togethernessImg,
+  community: communityImg,
+  dandelion: dandelionImg,
+  stars: starsImg,
 };
 
 // ─── SLIDE FOOTER (logo + page) ───
@@ -419,7 +422,7 @@ function SlideClosing() {
 }
 
 // ─── SLIDES ARRAY ───
-const slides = [
+export const slides = [
   { id: 'cover', render: SlideCover },
   { id: 'pain', render: SlideThePain },
   { id: 'stories', render: SlideStories },
@@ -432,412 +435,27 @@ const slides = [
   { id: 'closing', render: SlideClosing },
 ];
 
-// ─── PDF GENERATOR (jsPDF puro, visual fiel aos slides) ───
-function generatePDF() {
-  const pdf = new jsPDF('l', 'mm', 'a4');
-  const W = 297;
-  const H = 210;
+export function PresentationExport() {
+  return (
+    <main data-testid="presentation-export" className="bg-neutral-950 px-4 py-6 md:px-8 md:py-10">
+      <div className="mx-auto flex max-w-[1280px] flex-col gap-6 md:gap-8">
+        {slides.map((slide, index) => {
+          const SlideComponent = slide.render;
 
-  const drawAccentBar = (x: number, y: number, h: number) => {
-    pdf.setFillColor(217, 27, 140);
-    pdf.rect(x, y, 1.5, h, 'F');
-  };
-
-  const addFooter = (page: number, dark = false) => {
-    const ly = H - 16;
-    pdf.setDrawColor(dark ? 80 : 220, dark ? 80 : 220, dark ? 80 : 220);
-    pdf.line(10, ly, W - 10, ly);
-    pdf.setFontSize(7);
-    pdf.setTextColor(dark ? 120 : 160, dark ? 120 : 160, dark ? 120 : 160);
-    pdf.text('NextDream', 14, H - 9);
-    pdf.text(`${page} / ${TOTAL}`, W - 22, H - 9);
-  };
-
-  const sectionLabel = (text: string, x: number, y: number) => {
-    pdf.setFontSize(9);
-    pdf.setTextColor(217, 27, 140);
-    pdf.setDrawColor(217, 27, 140);
-    pdf.line(x, y - 1, x + 8, y - 1);
-    pdf.text(text.toUpperCase(), x + 11, y);
-  };
-
-  const sectionLabelDark = (text: string, x: number, y: number) => {
-    pdf.setFontSize(9);
-    pdf.setTextColor(244, 163, 209);
-    pdf.setDrawColor(244, 163, 209);
-    pdf.line(x, y - 1, x + 8, y - 1);
-    pdf.text(text.toUpperCase(), x + 11, y);
-  };
-
-  // ═══ SLIDE 1: CAPA ═══
-  pdf.setFillColor(18, 18, 22);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(35, 30, 38);
-  pdf.rect(W * 0.55, 0, W * 0.45, H, 'F');
-  drawAccentBar(0, 0, H);
-  sectionLabelDark('Uma plataforma feita de amor', 30, 48);
-  pdf.setFontSize(36);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text('NextDream', 30, 78);
-  pdf.setFillColor(217, 27, 140);
-  pdf.circle(30 + pdf.getTextWidth('NextDream') + 4, 73, 2.5, 'F');
-  pdf.setFontSize(22);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text('Porque os sonhos mais bonitos', 30, 100);
-  pdf.setTextColor(244, 163, 209);
-  pdf.setFont('helvetica', 'italic');
-  pdf.text('não custam dinheiro.', 30, 112);
-  pdf.setFont('helvetica', 'normal');
-  pdf.setFontSize(13);
-  pdf.setTextColor(160, 160, 165);
-  pdf.text('Custam ', 30, 132);
-  let cx = 30 + pdf.getTextWidth('Custam ');
-  pdf.setTextColor(230, 230, 230);
-  pdf.text('presença', cx, 132); cx += pdf.getTextWidth('presença');
-  pdf.setTextColor(160, 160, 165);
-  pdf.text('.  Custam ', cx, 132); cx += pdf.getTextWidth('.  Custam ');
-  pdf.setTextColor(230, 230, 230);
-  pdf.text('carinho', cx, 132); cx += pdf.getTextWidth('carinho');
-  pdf.setTextColor(160, 160, 165);
-  pdf.text('.  Custam ', cx, 132); cx += pdf.getTextWidth('.  Custam ');
-  pdf.setTextColor(230, 230, 230);
-  pdf.text('tempo', cx, 132); cx += pdf.getTextWidth('tempo');
-  pdf.setTextColor(160, 160, 165);
-  pdf.text('.', cx, 132);
-  pdf.setFillColor(217, 27, 140);
-  pdf.circle(32, 152, 2, 'F');
-  pdf.setDrawColor(217, 27, 140);
-  pdf.line(37, 152, 55, 152);
-  addFooter(1, true);
-
-  // ═══ SLIDE 2: A DOR ═══
-  pdf.addPage();
-  pdf.setFillColor(25, 25, 30);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(15, 15, 18);
-  pdf.rect(0, H * 0.6, W, H * 0.4, 'F');
-  sectionLabelDark('O que nos move', 30, 95);
-  pdf.setFontSize(26);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text('Existem pessoas que só precisam de', 30, 115);
-  pdf.setTextColor(244, 130, 190);
-  pdf.text('um abraço', 30, 128);
-  let ax = 30 + pdf.getTextWidth('um abraço');
-  pdf.setTextColor(255, 255, 255);
-  pdf.text(', ', ax, 128); ax += pdf.getTextWidth(', ');
-  pdf.setTextColor(244, 163, 209);
-  pdf.text('uma visita', ax, 128); ax += pdf.getTextWidth('uma visita');
-  pdf.setTextColor(255, 255, 255);
-  pdf.text(', ', ax, 128); ax += pdf.getTextWidth(', ');
-  pdf.setTextColor(244, 190, 220);
-  pdf.text('uma palavra.', ax, 128);
-  pdf.setFontSize(11);
-  pdf.setTextColor(180, 180, 185);
-  const painD = pdf.splitTextToSize('Pacientes em tratamento contra o câncer enfrentam muito mais que a doença. Enfrentam a solidão, o medo, e a sensação de que seus sonhos ficaram para trás.', W - 100);
-  pdf.text(painD, 30, 150);
-  addFooter(2, true);
-
-  // ═══ SLIDE 3: HISTÓRIAS ═══
-  pdf.addPage();
-  pdf.setFillColor(252, 240, 248);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(255, 250, 253);
-  pdf.rect(W * 0.3, 0, W * 0.7, H, 'F');
-  sectionLabel('Sonhos reais, apoio real', 24, 28);
-  pdf.setFontSize(22);
-  pdf.setTextColor(30, 30, 30);
-  pdf.text('Cada sonho é uma história de ', 24, 44);
-  pdf.setTextColor(217, 27, 140);
-  pdf.text('esperança', 24 + pdf.getTextWidth('Cada sonho é uma história de '), 44);
-  const st = [
-    { name: 'Dona Maria, 72 anos', cond: 'Câncer de mama', dream: '"Eu só queria alguém para me ensinar a fazer videochamada com meu neto."', res: 'Uma voluntária ensinou. Hoje, Dona Maria liga toda semana.' },
-    { name: 'Pedro, 9 anos', cond: 'Leucemia', dream: '"Eu queria que alguém lesse histórias de super-herói pra mim no hospital."', res: 'Um apoiador leu por 3 semanas. Pedro diz que ganhou superpoderes.' },
-    { name: 'Carlos, 45 anos', cond: 'Linfoma', dream: '"Eu queria aprender a tocar violão antes de terminar o tratamento."', res: 'Um músico voluntário deu aulas. Carlos tocou pela primeira vez no dia da alta.' },
-  ];
-  st.forEach((s, i) => {
-    const x = 18 + i * 90;
-    pdf.setFillColor(240, 220, 235);
-    pdf.roundedRect(x + 1.5, 56.5, 82, 128, 5, 5, 'F');
-    pdf.setFillColor(255, 255, 255);
-    pdf.roundedRect(x, 55, 82, 128, 5, 5, 'F');
-    pdf.setFillColor(217, 27, 140);
-    pdf.rect(x, 55, 82, 3, 'F');
-    pdf.setFontSize(12);
-    pdf.setTextColor(30, 30, 30);
-    pdf.text(s.name, x + 10, 72);
-    pdf.setFontSize(8);
-    pdf.setTextColor(150, 150, 150);
-    pdf.text(s.cond, x + 10, 79);
-    pdf.setFontSize(20);
-    pdf.setTextColor(217, 27, 140);
-    pdf.text('"', x + 8, 94);
-    pdf.setFontSize(9);
-    pdf.setTextColor(80, 80, 80);
-    pdf.setFont('helvetica', 'italic');
-    pdf.text(pdf.splitTextToSize(s.dream, 62), x + 16, 92);
-    pdf.setFont('helvetica', 'normal');
-    pdf.setDrawColor(249, 224, 240);
-    pdf.line(x + 10, 135, x + 72, 135);
-    pdf.setFontSize(8);
-    pdf.setTextColor(176, 20, 110);
-    pdf.setFillColor(217, 27, 140);
-    pdf.circle(x + 12, 145, 1.2, 'F');
-    pdf.text(pdf.splitTextToSize(s.res, 60), x + 16, 147);
-  });
-  addFooter(3);
-
-  // ═══ SLIDE 4: O QUE É ═══
-  pdf.addPage();
-  pdf.setFillColor(217, 27, 140);
-  pdf.rect(0, 0, W / 2, H, 'F');
-  pdf.setFillColor(176, 20, 110);
-  pdf.rect(0, H * 0.7, W / 2, H * 0.3, 'F');
-  pdf.setFillColor(252, 242, 248);
-  pdf.rect(W / 2, 0, W / 2, H, 'F');
-  pdf.setFontSize(28);
-  pdf.setTextColor(255, 200, 230);
-  pdf.text('✦', 22, 45);
-  pdf.setFontSize(20);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text(pdf.splitTextToSize('Uma plataforma que conecta quem precisa de carinho a quem tem carinho para dar.', 118), 22, 62);
-  pdf.setFontSize(10);
-  pdf.setTextColor(255, 210, 235);
-  pdf.text(pdf.splitTextToSize('O NextDream é um espaço seguro onde pacientes em tratamento oncológico cadastram sonhos simples — e pessoas com coração grande se oferecem para realizá-los.', 118), 22, 115);
-  ['Sem dinheiro', 'Sem burocracia', 'Com muito amor'].forEach((tag, i) => {
-    const ty = 155 + i * 12;
-    pdf.setDrawColor(255, 255, 255);
-    pdf.roundedRect(22, ty - 5, 55, 9, 3, 3, 'S');
-    pdf.setFontSize(9);
-    pdf.setTextColor(255, 255, 255);
-    pdf.text(tag, 28, ty);
-  });
-  pdf.setFontSize(14);
-  pdf.setTextColor(120, 60, 90);
-  pdf.text('Conectando corações', W / 2 + 20, H / 2 - 5);
-  pdf.setFontSize(10);
-  pdf.setTextColor(160, 100, 130);
-  pdf.text('desde o primeiro sonho.', W / 2 + 20, H / 2 + 8);
-  addFooter(4);
-
-  // ═══ SLIDE 5: COMO FUNCIONA ═══
-  pdf.addPage();
-  pdf.setFillColor(255, 255, 255);
-  pdf.rect(0, 0, W, H, 'F');
-  sectionLabel('Simples e acolhedor', 30, 28);
-  pdf.setFontSize(26);
-  pdf.setTextColor(30, 30, 30);
-  pdf.text('Como funciona?', 30, 48);
-  const stepsD = [
-    { num: '01', title: 'O paciente sonha', desc: 'Cadastra um desejo simples: uma visita, uma carta, aprender algo novo...' },
-    { num: '02', title: 'O apoiador encontra', desc: 'Explora sonhos publicados e escolhe aquele que toca seu coração.' },
-    { num: '03', title: 'A proposta nasce', desc: 'Envia uma proposta dizendo como pode ajudar.' },
-    { num: '04', title: 'A conexão acontece', desc: 'Chat seguro e mediado. Sem dados pessoais expostos.' },
-    { num: '05', title: 'O sonho se realiza', desc: 'E a gente celebra junto. Cada sonho realizado é uma vitória de todos.' },
-  ];
-  stepsD.forEach((step, i) => {
-    const y = 68 + i * 26;
-    pdf.setFillColor(217, 27, 140);
-    pdf.circle(40, y - 2, 7, 'F');
-    pdf.setFontSize(10);
-    pdf.setTextColor(255, 255, 255);
-    pdf.text(step.num, 37, y);
-    pdf.setFontSize(12);
-    pdf.setTextColor(30, 30, 30);
-    pdf.text(step.title, 52, y - 2);
-    pdf.setFontSize(9);
-    pdf.setTextColor(130, 130, 130);
-    pdf.text(step.desc, 52, y + 5);
-    if (i < stepsD.length - 1) {
-      pdf.setDrawColor(230, 230, 230);
-      pdf.line(40, y + 6, 40, y + 18);
-    }
-  });
-  addFooter(5);
-
-  // ═══ SLIDE 6: TEMPO ═══
-  pdf.addPage();
-  pdf.setFillColor(25, 18, 28);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(35, 28, 38);
-  pdf.rect(W * 0.6, 0, W * 0.4, H, 'F');
-  pdf.setFontSize(24);
-  pdf.setTextColor(244, 163, 209);
-  pdf.text('⏱', 30, 42);
-  pdf.setFontSize(30);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text('A moeda mais valiosa', 30, 65);
-  pdf.text('do mundo é o ', 30, 82);
-  pdf.setTextColor(244, 130, 190);
-  pdf.text('tempo.', 30 + pdf.getTextWidth('do mundo é o '), 82);
-  pdf.setFontSize(12);
-  pdf.setTextColor(200, 200, 205);
-  pdf.text('No NextDream, ninguém doa dinheiro.', 30, 102);
-  pdf.text('As pessoas doam o que têm de mais precioso:', 30, 113);
-  const vd = [
-    { e: '⏰', l: 'Seu tempo' }, { e: '💛', l: 'Seu carinho' },
-    { e: '🎵', l: 'Seu talento' }, { e: '🤝', l: 'Sua presença' },
-    { e: '📖', l: 'Sua história' }, { e: '🌟', l: 'Sua esperança' },
-  ];
-  vd.forEach((v, i) => {
-    const col = i % 2; const row = Math.floor(i / 2);
-    const vx = 30 + col * 85; const vy = 130 + row * 18;
-    pdf.setFillColor(50, 42, 55);
-    pdf.roundedRect(vx, vy - 6, 78, 14, 3, 3, 'F');
-    pdf.setFontSize(11);
-    pdf.setTextColor(255, 255, 255);
-    pdf.text(`${v.e}  ${v.l}`, vx + 6, vy + 2);
-  });
-  addFooter(6, true);
-
-  // ═══ SLIDE 7: IMPACTO ═══
-  pdf.addPage();
-  pdf.setFillColor(255, 252, 254);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(252, 240, 248);
-  pdf.rect(W * 0.5, 0, W * 0.5, H, 'F');
-  sectionLabel('Nosso impacto', 24, 28);
-  pdf.setFontSize(22);
-  pdf.setTextColor(30, 30, 30);
-  pdf.text('Números que representam ', 24, 46);
-  pdf.setTextColor(217, 27, 140);
-  pdf.text('vidas', 24 + pdf.getTextWidth('Números que representam '), 46);
-  const md = [
-    { v: '100%', l: 'Gratuito', d: 'Sem taxas, sem custos, sem barreiras' },
-    { v: '3', l: 'Perfis', d: 'Paciente, Apoiador e Admin' },
-    { v: '30+', l: 'Telas', d: 'Experiência completa e acolhedora' },
-    { v: '∞', l: 'Amor', d: 'Porque carinho não tem limite' },
-  ];
-  md.forEach((m, i) => {
-    const mx = 20 + i * 67;
-    pdf.setFillColor(245, 225, 238);
-    pdf.roundedRect(mx + 1.5, 62.5, 60, 70, 6, 6, 'F');
-    pdf.setFillColor(255, 255, 255);
-    pdf.roundedRect(mx, 61, 60, 70, 6, 6, 'F');
-    pdf.setFontSize(28);
-    pdf.setTextColor(217, 27, 140);
-    pdf.text(m.v, mx + 30, 88, { align: 'center' });
-    pdf.setFontSize(12);
-    pdf.setTextColor(50, 50, 50);
-    pdf.text(m.l, mx + 30, 102, { align: 'center' });
-    pdf.setFontSize(8);
-    pdf.setTextColor(150, 150, 150);
-    pdf.splitTextToSize(m.d, 50).forEach((line: string, li: number) => {
-      pdf.text(line, mx + 30, 112 + li * 5, { align: 'center' });
-    });
-  });
-  pdf.setFillColor(255, 255, 255);
-  pdf.roundedRect(20, 148, W - 40, 34, 5, 5, 'F');
-  pdf.setFillColor(252, 240, 248);
-  pdf.circle(40, 165, 9, 'F');
-  pdf.setFontSize(14);
-  pdf.setTextColor(217, 27, 140);
-  pdf.text('♡', 37, 168);
-  pdf.setFontSize(11);
-  pdf.setTextColor(30, 30, 30);
-  pdf.text('Sonhos não têm preço. Têm ', 58, 161);
-  pdf.setTextColor(217, 27, 140);
-  pdf.text('significado', 58 + pdf.getTextWidth('Sonhos não têm preço. Têm '), 161);
-  pdf.setTextColor(30, 30, 30);
-  pdf.text('.', 58 + pdf.getTextWidth('Sonhos não têm preço. Têm significado'), 161);
-  pdf.setFontSize(8);
-  pdf.setTextColor(130, 130, 130);
-  pdf.text('Cada sonho realizado reacende a esperança de quem luta contra o câncer todos os dias.', 58, 172);
-  addFooter(7);
-
-  // ═══ SLIDE 8: QUEM PODE AJUDAR ═══
-  pdf.addPage();
-  pdf.setFillColor(255, 255, 255);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(245, 235, 242);
-  pdf.rect(0, 0, W / 2, H, 'F');
-  pdf.setFontSize(40);
-  pdf.setTextColor(217, 27, 140);
-  pdf.text('🤝', W / 4 - 10, H / 2 + 5);
-  sectionLabel('Todo mundo pode ajudar', W / 2 + 15, 35);
-  pdf.setFontSize(20);
-  pdf.setTextColor(30, 30, 30);
-  pdf.text(pdf.splitTextToSize('Você também pode fazer parte dessa corrente de amor', 120), W / 2 + 15, 52);
-  const pd = [
-    { t: 'Profissionais de saúde', d: 'Indiquem pacientes que precisam de apoio emocional. Nós cuidamos do resto.' },
-    { t: 'Voluntários e comunidades', d: 'Ampliem o alcance dos sonhos. Juntos, chegamos a mais pessoas.' },
-    { t: 'Pessoas como você', d: 'Doe seu tempo, talento ou presença. Um gesto pode transformar um dia.' },
-    { t: 'Quem quer inspirar outros', d: 'Compartilhe sonhos reais. Uma história pode ser a ponte.' },
-  ];
-  pd.forEach((p, i) => {
-    const py = 88 + i * 26;
-    pdf.setFillColor(217, 27, 140);
-    pdf.circle(W / 2 + 18, py - 2, 1.5, 'F');
-    pdf.setFontSize(11);
-    pdf.setTextColor(30, 30, 30);
-    pdf.text(p.t, W / 2 + 24, py);
-    pdf.setFontSize(9);
-    pdf.setTextColor(130, 130, 130);
-    pdf.text(pdf.splitTextToSize(p.d, 108), W / 2 + 24, py + 7);
-  });
-  addFooter(8);
-
-  // ═══ SLIDE 9: SEGURANÇA ═══
-  pdf.addPage();
-  pdf.setFillColor(24, 24, 27);
-  pdf.rect(0, 0, W, H, 'F');
-  sectionLabelDark('Confiança e segurança', 24, 28);
-  pdf.setFontSize(24);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text('Cuidamos de quem cuida', 24, 48);
-  const sd = [
-    { i: '🔒', t: 'Chat Moderado', d: 'Conversas mediadas. Dados protegidos.' },
-    { i: '🛡️', t: 'Painel Admin', d: 'Moderação em tempo real de propostas e mensagens.' },
-    { i: '👁️', t: 'Auditoria', d: 'Ações registradas. Transparência total.' },
-    { i: '🚫', t: 'Filtro de Conteúdo', d: 'Bloqueio automático de conteúdo inadequado.' },
-    { i: '✅', t: 'Verificação', d: 'Apoiadores verificados antes de interagir.' },
-    { i: '📋', t: 'Diretrizes', d: 'Termos e diretrizes que protegem todos.' },
-  ];
-  sd.forEach((s, i) => {
-    const col = i % 3; const row = Math.floor(i / 3);
-    const sx = 18 + col * 90; const sy = 60 + row * 60;
-    pdf.setFillColor(38, 38, 42);
-    pdf.roundedRect(sx, sy, 82, 50, 4, 4, 'F');
-    pdf.setFillColor(217, 27, 140);
-    pdf.rect(sx, sy, 82, 1.5, 'F');
-    pdf.setFontSize(18);
-    pdf.setTextColor(255, 255, 255);
-    pdf.text(s.i, sx + 8, sy + 16);
-    pdf.setFontSize(11);
-    pdf.text(s.t, sx + 8, sy + 28);
-    pdf.setFontSize(8);
-    pdf.setTextColor(160, 160, 165);
-    pdf.text(pdf.splitTextToSize(s.d, 66), sx + 8, sy + 36);
-  });
-  addFooter(9, true);
-
-  // ═══ SLIDE 10: ENCERRAMENTO ═══
-  pdf.addPage();
-  pdf.setFillColor(18, 12, 22);
-  pdf.rect(0, 0, W, H, 'F');
-  pdf.setFillColor(28, 20, 35);
-  pdf.circle(W / 2, H / 2, 80, 'F');
-  pdf.setFillColor(22, 16, 28);
-  pdf.circle(W / 2, H / 2, 60, 'F');
-  pdf.setFontSize(14);
-  pdf.setTextColor(217, 27, 140);
-  pdf.text('NextDream', W / 2, 55, { align: 'center' });
-  pdf.setDrawColor(217, 27, 140);
-  pdf.line(W / 2 - 20, 60, W / 2 + 20, 60);
-  pdf.setFontSize(28);
-  pdf.setTextColor(255, 255, 255);
-  pdf.text('Você não precisa de dinheiro', W / 2, 85, { align: 'center' });
-  pdf.text('para mudar uma vida.', W / 2, 100, { align: 'center' });
-  pdf.setFontSize(15);
-  pdf.setTextColor(200, 200, 205);
-  pdf.text('Precisa de coração.', W / 2, 122, { align: 'center' });
-  pdf.setTextColor(244, 163, 209);
-  pdf.text('E se você está lendo isso, você já tem.', W / 2, 138, { align: 'center' });
-  pdf.setFontSize(8);
-  pdf.setTextColor(100, 100, 105);
-  pdf.text('♡  NextDream — Feito com amor, para quem precisa de amor  ♡', W / 2, 170, { align: 'center' });
-  addFooter(10, true);
-
-  pdf.save('NextDream_Apresentacao.pdf');
+          return (
+            <section
+              key={slide.id}
+              data-testid={`presentation-export-slide-${index + 1}`}
+              data-export-slide={slide.id}
+              className="mx-auto aspect-[16/9] w-full overflow-hidden rounded-[32px] bg-white shadow-[0_32px_100px_rgba(0,0,0,0.35)] print:rounded-none print:shadow-none"
+            >
+              <SlideComponent />
+            </section>
+          );
+        })}
+      </div>
+    </main>
+  );
 }
 
 // ─── MAIN COMPONENT ───
