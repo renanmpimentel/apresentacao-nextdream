@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, type ReactNode } from 'react';
+import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Clock, HandHeart, Users, Sparkles, Star, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import logoImg from '../assets/logo.png';
@@ -34,7 +34,6 @@ function SlideWrap({ children, slideNum, total, dark = false }: { children: Reac
   return (
     <div className="relative h-full w-full">
       {children}
-      <SlideFooter slideNum={slideNum} total={total} dark={dark} />
     </div>
   );
 }
@@ -845,7 +844,7 @@ function generatePDF() {
 export default function Presentation() {
   const [current, setCurrent] = useState(0);
   const total = slides.length;
-  const stageWidth = 'min(98vw, calc((100vh - 7.5rem) * 16 / 9))';
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const prev = useCallback(() => setCurrent((c) => Math.max(0, c - 1)), []);
   const next = useCallback(() => setCurrent((c) => Math.min(total - 1, c + 1)), [total]);
@@ -859,26 +858,43 @@ export default function Presentation() {
     return () => window.removeEventListener('keydown', handler);
   }, [next, prev]);
 
+  const handleTouchStart = useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  }, []);
+
+  const handleTouchEnd = useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+    const start = touchStartRef.current;
+    const touch = event.changedTouches[0];
+    if (!start || !touch) {
+      return;
+    }
+
+    const deltaX = touch.clientX - start.x;
+    const deltaY = touch.clientY - start.y;
+    touchStartRef.current = null;
+
+    if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX < 0) {
+      next();
+      return;
+    }
+
+    prev();
+  }, [next, prev]);
+
   const SlideComponent = slides[current].render;
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center px-2 py-2 sm:px-3 sm:py-3">
-      {/* Top bar */}
+    <div className="relative h-[100dvh] w-full overflow-hidden bg-gray-950">
       <div
-        className="mb-2 flex w-full items-center justify-between gap-3 rounded-xl bg-white/5 px-3 py-2 backdrop-blur-sm sm:mb-3"
-        style={{ maxWidth: stageWidth }}
-      >
-        <div className="flex items-center gap-2">
-          <img src={logoImg} alt="NextDream" className="h-5 w-auto brightness-0 invert opacity-70 sm:h-6" />
-          <span className="text-xs text-gray-400 sm:text-sm">Slide {current + 1} de {total}</span>
-        </div>
-        <span className="text-[11px] text-gray-500 sm:text-xs">Use ← → ou espaço para navegar</span>
-      </div>
-
-      {/* Slide container */}
-      <div
-        className="relative h-[calc(100vh-8.5rem)] max-h-[calc(100vh-8.5rem)] w-full overflow-hidden rounded-xl bg-white shadow-2xl shadow-pink-900/10 sm:rounded-2xl md:h-auto md:max-h-none md:aspect-[16/9]"
-        style={{ maxWidth: stageWidth }}
+        data-testid="presentation-stage"
+        className="relative h-full w-full overflow-hidden bg-white"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -892,29 +908,53 @@ export default function Presentation() {
             <SlideComponent />
           </motion.div>
         </AnimatePresence>
-      </div>
 
-      {/* Navigation */}
-      <div className="mt-3 flex items-center gap-4 sm:mt-4 sm:gap-6">
-        <button onClick={prev} disabled={current === 0} className="rounded-full bg-gray-800 p-3 transition-all hover:bg-gray-700 disabled:opacity-20">
-          <ChevronLeft className="w-5 h-5 text-white" />
-        </button>
-        <div className="flex gap-2">
-          {slides.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={() => setCurrent(i)}
-              className="w-3 h-3 rounded-full transition-all"
-              style={{
-                background: i === current ? BRAND : 'rgba(255,255,255,0.15)',
-                transform: i === current ? 'scale(1.3)' : 'scale(1)',
-              }}
-            />
-          ))}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 flex items-start justify-between p-3 md:p-5">
+          <div className="pointer-events-auto flex items-center gap-3 rounded-full bg-black/30 px-3 py-2 text-white backdrop-blur-md">
+            <img src={logoImg} alt="NextDream" className="h-4 w-auto brightness-0 invert opacity-80 md:h-5" />
+            <span className="text-xs tracking-[0.18em] text-white/70 uppercase hidden sm:inline">Apresentação</span>
+            <span className="text-xs text-white/80">{current + 1} / {total}</span>
+          </div>
+          <div className="hidden rounded-full bg-black/25 px-3 py-2 text-[11px] text-white/60 backdrop-blur-md md:block">
+            Use ← → ou espaço para navegar
+          </div>
         </div>
-        <button onClick={next} disabled={current === total - 1} className="rounded-full bg-gray-800 p-3 transition-all hover:bg-gray-700 disabled:opacity-20">
-          <ChevronRight className="w-5 h-5 text-white" />
-        </button>
+
+        <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-30 flex items-center justify-between px-3 md:px-5">
+          <button
+            aria-label="Slide anterior"
+            onClick={prev}
+            disabled={current === 0}
+            className="pointer-events-auto rounded-full border border-white/15 bg-black/30 p-3 text-white backdrop-blur-md transition hover:bg-black/45 disabled:cursor-not-allowed disabled:opacity-25"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            aria-label="Próximo slide"
+            onClick={next}
+            disabled={current === total - 1}
+            className="pointer-events-auto rounded-full border border-white/15 bg-black/30 p-3 text-white backdrop-blur-md transition hover:bg-black/45 disabled:cursor-not-allowed disabled:opacity-25"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center p-3 md:p-5">
+          <div className="pointer-events-auto flex items-center gap-2 rounded-full bg-black/30 px-3 py-2 backdrop-blur-md">
+            {slides.map((s, i) => (
+              <button
+                key={s.id}
+                aria-label={`Slide ${i + 1}`}
+                onClick={() => setCurrent(i)}
+                className="h-2.5 w-2.5 rounded-full transition md:h-3 md:w-3"
+                style={{
+                  background: i === current ? '#ffffff' : 'rgba(255,255,255,0.28)',
+                  transform: i === current ? 'scale(1.2)' : 'scale(1)',
+                }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
